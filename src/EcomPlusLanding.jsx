@@ -31,6 +31,10 @@ export default function EcomPlusLanding() {
     }
   }
 
+  // whatsapp link constant used by header contact button
+  const WHATSAPP_URL =
+    "https://api.whatsapp.com/message/7YQ6T7DCQZJLJ1?autoload=1&app_absent=0";
+
   return (
     <div
       style={{
@@ -67,11 +71,20 @@ export default function EcomPlusLanding() {
         .nav-contact { color:#0b1220; font-weight:800; }
 
         .header-actions { display:flex; gap:10px; align-items:center; }
+
+        /* Contact button base */
         .contact-btn {
-          padding:10px 14px; border-radius:10px; background: linear-gradient(90deg,#6366f1,#7c3aed);
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 14px;
+          border-radius: 12px;
+          background: linear-gradient(90deg,#6366f1,#7c3aed);
           color:white; font-weight:600; text-decoration:none; box-shadow:0 8px 30px rgba(99,102,241,0.12);
           font-size:14px;
         }
+
+        .contact-btn svg { width:18px; height:18px; display:block; }
 
         .hamburger {
           display:inline-flex; align-items:center; justify-content:center;
@@ -535,7 +548,21 @@ export default function EcomPlusLanding() {
           .hero-right { order: 2; margin-top: 8px; width:100%; display:flex; justify-content:center; }
           .hero-gif { max-width: 92%; }
 
-          .contact-btn { padding:8px 10px; font-size:13px; border-radius:10px; }
+          /* make contact button pill-like on mobile with icon */
+          .contact-btn {
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 13px;
+          }
+
+          .contact-btn svg { width:16px; height:16px; }
+
+          .contact-btn .btn-label { display:block; }
+
+          .contact-btn .btn-icon { display:inline-flex; align-items:center; justify-content:center; }
+
+          .contact-btn .btn-icon svg { display:block; }
+
           .hamburger { display:inline-flex; }
           .mobile-panel { position: absolute; left:0; right:0; top:64px; z-index:88; }
 
@@ -687,13 +714,31 @@ export default function EcomPlusLanding() {
 
           <div className="header-actions">
             <a
-  href="https://api.whatsapp.com/message/7YQ6T7DCQZJLJ1?autoload=1&app_absent=0"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="contact-btn"
->
-  Contact us
-</a>
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-btn"
+              onClick={(e) => {
+                // reliable open for devices that block simple href navigation in some contexts:
+                e.preventDefault();
+                try {
+                  window.open(WHATSAPP_URL, "_blank", "noopener");
+                } catch (err) {
+                  // fallback to setting location
+                  window.location.href = WHATSAPP_URL;
+                }
+                return false;
+              }}
+              aria-label="Contact us on WhatsApp"
+            >
+              <span className="btn-icon" aria-hidden>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+                  <path d="M21 12a9 9 0 10-2.5 6.1L22 22l-3.9-0.5A9 9 0 0021 12z" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M16.5 12.5c-.2-.1-1.2-.6-1.4-.7-.2-.1-.4-.2-.6.1-.2.2-.8.7-1 1-.2.2-.4.3-.6.1-.2-.1-.9-.3-1.7-1.1-.6-.6-.8-1-.9-1.2-.1-.2 0-.3.1-.4.1-.1.2-.4.3-.6.1-.2 0-.4 0-.5 0-.1-.6-1.4-.9-1.9-.2-.5-.5-.4-.6-.4-.2 0-.4 0-.6 0-.2 0-.5.1-.8.5-.3.4-1 1-1 2 0 1 .8 2.4 1.8 3.3 1 .9 3.1 2.8 4.9 3.2 1.8.4 2.5.3 2.9.2.4-.1 1.4-.6 1.6-1.2.2-.6.2-1.1.1-1.2-.1-.1-.6-.2-.8-.3z" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <span className="btn-label">Contact us</span>
+            </a>
 
             <button
               aria-label="Toggle menu"
@@ -1167,7 +1212,7 @@ export default function EcomPlusLanding() {
     aria-label="WhatsApp"
   >
     <img
-      src="whatsapp.jfif"
+      src="/whatsapp.jfif"
       alt="WhatsApp"
       style={{ width: 28, height: 28, display: "block" }}
     />
