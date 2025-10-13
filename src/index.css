@@ -1,0 +1,13 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* small defaults without using @apply (avoids the unknown-utility error) */
+html, body, #root { height: 100%; }
+body {
+  background-color: #ffffff; /* same as bg-white */
+  color: #0f172a;            /* similar to text-slate-900 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
